@@ -2,7 +2,7 @@ const  mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const todoSchema = new Schema({
-  newTodo:   String,
+  addedTask:   String,
   completed:  {type:Boolean, default:false},
   priority: {type:String},
   date: { type: Date, default: Date.now },
@@ -16,3 +16,4 @@ const Todo = mongoose.model('Todo', todoSchema);
 //   if (err) return handleError(err);
 //   console.log("saved")
 // });
+module.exports = mongoose.model('Todo',todoSchema);
