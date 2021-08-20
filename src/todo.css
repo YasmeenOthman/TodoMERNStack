@@ -1,0 +1,24 @@
+.taskContainer{
+    display: grid;
+    grid-gap: 60px 60px;
+    grid-template-columns: auto auto auto auto;
+    align-content: center;
+    margin:inherit
+    
+}
+.task{
+    border-style:outset; 
+    height:60%;
+    background-color:rgb(172, 123, 160);
+    padding-left: 5px;
+}
+.Btn{
+width:60px;
+border-style:hidden
+}
+#edit:hover {
+    background-color:seagreen
+  }
+  #delete:hover {
+    background-color:red;
+  }

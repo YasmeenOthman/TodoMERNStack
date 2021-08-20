@@ -1,48 +1,55 @@
 import React from "react";
 import $ from "jquery";
+import "../createTodo.css"
 class CreateTodo extends React.Component {
     constructor(){
       super();
 
       this.state = {
-          addedTask:   null,
+          addedTask: "",
           completed:  false,
-          priority:"high",
+          priority:"",
           date:new Date()
         }
-        this.addTodo = this.addTodo.bind(this);
         this.getNewTask = this.getNewTask.bind(this);
+        this.createTodo = this.createTodo.bind(this);
+        
     }
     getNewTask(e){
-      // e.preventDefault();
+      e.preventDefault();
       var newAddedTask = e.target.value;
+      // console.log(newAddedTask)
       this.setState({
         addedTask:newAddedTask
       });
      
       }
     
-    addTodo(){
-   
+    createTodo(){
+      var that = this;
+      var tasks = that.state.addedTask;
+      console.log(tasks)
+  
       $.ajax({
-        url:'/create',
-        method:'POST',
-        dataType:'application/json',
-        success:function(data){
-          console.log("todos saved successfully");
+        url: '/create',
+        type: 'POST',
+        data: {addedTask:tasks},
+        dataType: 'json',
+        success: function (data) {
+          console.log('task sent');
         },
-        error:function(err) {
-          console.log(err)
+        error: function (data) {
+          console.error(' Failed to send the task', data);
+          
         }
-     })
-
+      });
     }
   render() {
     return (
-        <div> 
-            <h1>To Do List</h1>
+        <div className="createTodo"> 
             <input  onChange={this.getNewTask} type="text" className="todo" placeholder="add new task"></input>  
-            <button onClick={this.addTodo}>Add</button> 
+            <button className="addBtn" onClick={this.createTodo}> Add </button> 
+            
         </div>
     )
   }

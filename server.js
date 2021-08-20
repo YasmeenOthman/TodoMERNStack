@@ -14,12 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-// parse some custom thing into a Buffer
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 /* ---------------------------------------
 SERVE STATIC FILES IN SERVER
 -------------------------------------------*/
@@ -35,12 +32,12 @@ app.get('/', function (req, res) {
 
 /*--------save the task(POST REQUEST)--------*/
 app.post('/create', async(req,res)=>{
-
- const task= new model({addedTask : req.body.addedTask})
-  task.save().then(item => {
+  // console.log(req.body)
+  const task= new model({addedTask : req.body.addedTask})
+  await task.save().then(item => {
   res.send("item saved to database");
   }).catch(err => {
-    res.status(400).send("unable to save to database");
+     res.status(400).send("unable to save to database");
   });
 
 })
@@ -48,8 +45,14 @@ app.post('/create', async(req,res)=>{
 
 app.get('/catch', async(req,res) =>{
   try{
-    const task= await model.find()
+    const task= await model
+    .aggregate(
+      [
+        { $sort : { date : -1 ,_id:1} }
+      ]
+   ).limit(15)
     res.send(task)
+    res.json({task})
   }
   catch(err ) {
     res.send(err);
