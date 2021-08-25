@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import "../createTodo.css"
+import axios from "axios";
 class CreateTodo extends React.Component {
     constructor(){
       super();
@@ -28,21 +29,14 @@ class CreateTodo extends React.Component {
     createTodo(){
       var that = this;
       var tasks = that.state.addedTask;
-      console.log(tasks)
-  
-      $.ajax({
-        url: '/create',
-        type: 'POST',
-        data: {addedTask:tasks},
-        dataType: 'json',
-        success: function (data) {
-          console.log('task sent');
-        },
-        error: function (data) {
-          console.error(' Failed to send the task', data);
-          
-        }
-      });
+      // console.log(tasks);
+      axios.post("http://localhost:3000/create",{addedTask:tasks}).then((response)=>{
+        that.setState({
+          addedTask:response.data.addedTask
+        })
+
+      })
+
     }
   render() {
     return (

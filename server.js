@@ -79,6 +79,7 @@ app.delete("/delete/:id",async(req,res) => {
   try{
     const task = await model.findByIdAndDelete(req.params.id);
     res.send(task)
+    
   }
   catch(err){
     res.send(err)
