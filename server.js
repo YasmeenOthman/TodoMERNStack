@@ -50,7 +50,7 @@ app.get('/catch', async(req,res) =>{
       [
         { $sort : { date : -1 ,_id:1} }
       ]
-   ).limit(15)
+   ).limit(25)
     res.send(task)
     res.json({task})
   }

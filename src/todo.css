@@ -22,3 +22,7 @@ border-style:hidden
   #delete:hover {
     background-color:red;
   }
+  .animateLoading{
+ color: lightpink;
+ text-align: center;
+  }
