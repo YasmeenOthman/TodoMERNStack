@@ -14,23 +14,22 @@ class CreateTodo extends React.Component {
         this.createTodo = this.createTodo.bind(this);  
     }
     getNewTask(e){
-      e.preventDefault();
-      var newAddedTask = e.target.value;
       this.setState({
-        addedTask:newAddedTask
+        addedTask:e.target.value
       });
      
-      }
+    }
     
-    createTodo(){
+    createTodo(e){
+      e.preventDefault();
       var that = this;
       var tasks = that.state.addedTask;
       if(tasks === ""){
-        alert("Please add your next task");
+        alert("Please add your task");
         return;
       } else {
           axios.post("http://localhost:3000/create",{addedTask:tasks}).then((response)=>{
-            that.setState({
+            this.setState({
               addedTask:response.data.addedTask
             })
           })

@@ -21,13 +21,13 @@ class Todos extends React.Component {
       url:'/catch',
       type:'GET',
       success: function(data){
-        console.log("tasks retrieved successfully data:",data)
+        // console.log("tasks retrieved successfully data:",data)
         that.setState({
           tasks:data
-        })  
+        });
       },
       error: function(err){
-        console.log(err)
+        console.log(err);
       }
     })
   }
@@ -54,18 +54,17 @@ class Todos extends React.Component {
 
   deleteTask(e,id){
     if(window.confirm("Are you sure?")){
-      var that = this;
       axios.delete(`http://localhost:3000/delete/${id}`).then(()=>{
-        that.state.tasks.filter((taskId)=>{
+        var tasksAfterDelete = this.state.tasks.filter((taskId)=>{
           return taskId !==id;
         })
-        
+        this.setState({
+          tasks:tasksAfterDelete
+        })
       })
     }
   }
-
   render() {
-    var that = this
     if(this.state.isEditing){
      return(
        
@@ -74,14 +73,14 @@ class Todos extends React.Component {
      )
     }else{
       if (this.state.tasks.length ){
-        var tasks = this.state.tasks
+        
         return (
           <div  className="taskContainer">
-            {tasks.map((task)=>{
+            {this.state.tasks.map((task)=>{
               return(
                 <div key={task._id}> 
-                  <p key={task.addedTask} className="task"> {task.addedTask} </p>
-                  <button key={task._id} className="Btn" id="edit" onClick={(e)=>this.editTask(e,task._id)}><i className="fa fa-edit"></i>
+                  <p className="task"> {task.addedTask} </p>
+                  <button  className="Btn" id="edit" onClick={(e)=>this.editTask(e,task._id)}><i className="fa fa-edit"></i>
                   </button> <span> </span>
                   <button  className="Btn" id="delete" onClick={(e)=>this.deleteTask(e,task._id)}><i className="fa fa-trash"></i>
                   </button>
