@@ -1,41 +1,71 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'react'
 
 class EditForm extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
+        // console.log(this.props, "props in child")
         this.state = {
-            addedTask :this.props.task.addedTask
+            task: {
+                addedTask: this.props.task.addedTask,
+                _id: this.props.task._id,
+                completed: this.props.task.completed,
+                priority: this.props.task.priority,
+                date: this.props.task.date
+            },
+
+            isEditing: this.props.isEditing,
+
         }
-       
+        console.log(this.state, 1)
         this.handleEditInputChange = this.handleEditInputChange.bind(this)
         this.updateTask = this.updateTask.bind(this)
+        this.cancelEdit = this.cancelEdit.bind(this)
+
     }
 
-    handleEditInputChange(editedTask){
-        this.setState({
-            addedTask:editedTask
+    async handleEditInputChange(editedTask) {
+        if(editedTask === undefined){
+            alert("Do not keep it empty, instead please delet it from the main page!")
+        }
+        await this.setState({
+            task: {
+                addedTask: editedTask,
+                _id: this.state.task._id
+            }
         })
     }
 
-    updateTask(){
-        console.log("updated successfully");
-        
+    updateTask(e) {
+        this.setState({
+            isEditing: !this.state.isEditing
+        })
+        this.props.parentCallback(this.state)
+        // console.log(this.state, "2child");
+        this.cancelEdit(e)
+        e.preventDefault();
     }
+
+    async cancelEdit(e) {
+        await this.setState({
+            isEditing: !this.props.isEditing
+        })
+        this.props.parentCallback(this.state);
+        e.preventDefault();
+    }
+
     render() {
         return (
-            <div key={this.props.task._id}>
-                <input 
-                type = "text" 
-                value={this.state.addedTask}
-                onChange={e=>this.handleEditInputChange(e.target.value)}
+            <div key={this.state.task._id}>
+                <input
+                    type="text"
+                    value={this.state.task.addedTask}
+                    onChange={e => this.handleEditInputChange(e.target.value)}
                 />
-                <button type="submit" onClick = {this.updateTask}> Update </button>
-                {/* here we added a "Cancel" button to set isEditing state back to false which will cancel editing mode */}
-                {/* <button onClick={() => setIsEditing(false)}>Cancel</button> */}
-                <button>Cancel</button>
+                <button type="submit" onClick={this.updateTask.bind(this)}> <i className ="fa fa-check"></i> </button>
+                <button onClick={this.cancelEdit.bind(this)}> <i className ="fa fa-times"></i></button>
             </div>
         );
     }
 }
-
 export default EditForm;

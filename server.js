@@ -60,17 +60,13 @@ app.get('/catch', async(req,res) =>{
 
 
 /*------ Edit and update the task(put request)----------*/
-
-
 app.put("/edit/:id",async(req,res)=> {
   try{
-    const task = await model.findByIdAndUpdate(req.params.id,req.body);
+    const task = await model.findByIdAndUpdate(req.params.id,req.body.task)
     res.send(task)
-
   } 
   catch(error){
     res.send(error)
-
   } 
 })
 
@@ -79,7 +75,6 @@ app.delete("/delete/:id",async(req,res) => {
   try{
     const task = await model.findByIdAndDelete(req.params.id);
     res.send(task)
-    
   }
   catch(err){
     res.send(err)
