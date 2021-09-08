@@ -1,8 +1,8 @@
 import React from "react";
-import $, { data } from "jquery";
 import axios from "axios";
 import "../todo.css"
 import EditForm from "./EditForm"
+var quotes = require('../oneWordMotivation.json')
 
 class Todos extends React.Component {
   constructor(props) {
@@ -86,6 +86,7 @@ class Todos extends React.Component {
             {this.state.tasks.map((task) => {
               return (
                 <div key={task._id}>
+                  {/* <h6 className = "todoHeader">Todo</h6> */}
                   <p className="task"> {task.addedTask} </p>
                   <button className="Btn" id="edit" onClick={(e) => this.editTask(e, task._id)}><i className="fa fa-edit"></i>
                   </button> <span> </span>

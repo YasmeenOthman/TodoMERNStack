@@ -1,28 +1,34 @@
-.taskContainer{
+.taskContainer {
     display: grid;
     grid-gap: 60px 60px;
     grid-template-columns: auto auto auto auto;
     align-content: center;
-    margin:inherit
-    
+    margin: inherit
 }
-.task{
-    border-style:outset; 
-    height:60%;
-    background-color:rgb(172, 123, 160);
+
+.task {
+    position: inherit;
+    border-style: outset;
+    height: 100px;
+    background-color: rgba(248, 153, 0, 0.856);
     padding-left: 5px;
+    z-index: 1;
 }
-.Btn{
-width:60px;
-border-style:hidden
+
+.Btn {
+    width: 60px;
+    border-style: hidden
 }
+
 #edit:hover {
-    background-color:seagreen
-  }
-  #delete:hover {
-    background-color:red;
-  }
-  .animateLoading{
- color: lightpink;
- text-align: center;
-  }
+    background-color: rgb(10, 119, 57)
+}
+
+#delete:hover {
+    background-color: rgb(221, 7, 7);
+}
+
+.animateLoading {
+    color: lightpink;
+    text-align: center;
+}

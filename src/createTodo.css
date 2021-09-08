@@ -1,8 +1,8 @@
-.createTodo{
-text-align: center;
-
+.createTodo {
+    text-align: center;
 }
-.addBtn{
+
+.addBtn {
     border-radius: 50%;
     margin-left: 10px;
 }
