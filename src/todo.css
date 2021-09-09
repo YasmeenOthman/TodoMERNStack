@@ -3,21 +3,22 @@
     grid-gap: 60px 60px;
     grid-template-columns: auto auto auto auto;
     align-content: center;
-    margin: inherit
+    margin: inherit;
 }
 
 .task {
     position: inherit;
     border-style: outset;
     height: 100px;
-    background-color: rgba(248, 153, 0, 0.856);
+    background-color: rgba(253, 188, 7, 0.931);
     padding-left: 5px;
     z-index: 1;
 }
 
 .Btn {
     width: 60px;
-    border-style: hidden
+    border-style: hidden;
+    
 }
 
 #edit:hover {
@@ -32,3 +33,6 @@
     color: lightpink;
     text-align: center;
 }
+/* .crossed-line {
+    text-decoration: line-through;
+} */

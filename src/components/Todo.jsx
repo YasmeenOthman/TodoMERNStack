@@ -37,6 +37,7 @@ class Todos extends React.Component {
   }
   /*------ update the state from the child component-----*/
   handelCallback(childData) {
+    
     this.state.tasks.map((task) => {
       if (task._id === childData.task._id) {
         task.addedTask = childData.task.addedTask;
@@ -68,6 +69,12 @@ class Todos extends React.Component {
       })
     }
   }
+  /*----- strike through text when completed------*/
+  // completed(e){
+  //   var element = e.target;
+  //   element.classList.toggle("crossed-line")
+
+  // }
   render() {
     if (this.state.isEditing) {
       let props = {
@@ -92,6 +99,8 @@ class Todos extends React.Component {
                   </button> <span> </span>
                   <button className="Btn" id="delete" onClick={(e) => this.deleteTask(e, task._id)}><i className="fa fa-trash"></i>
                   </button>
+                  <span> </span>
+                  {/* <button className="Btn"  title="Check if completed"><i className="fa fa-check"></i></button> */}
                 </div>
               )
             })}

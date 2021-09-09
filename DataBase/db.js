@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Model = require ('./todoModel')
+require("dotenv").config()
 //-------------------Connection Setup-------------------------
-
-mongoose.connect('mongodb://localhost:27017/todo', 
+const URI = process.env.MONGODB__CONNECTION_STRING;
+mongoose.connect(URI, 
 {
   useNewUrlParser: true,
    useUnifiedTopology: true
@@ -24,4 +25,3 @@ db.once('open', function() {
 
 
 
-//to start the db terminal brew services start mongodb-community@4.4

@@ -5,7 +5,7 @@ const cors = require ('cors');
 const path = require('path');
 const model = require ('./DataBase/todoModel');
 
-const port = 5000
+const port = process.env.Port|| 5000
 const app = express()
 
 app.use(cors());

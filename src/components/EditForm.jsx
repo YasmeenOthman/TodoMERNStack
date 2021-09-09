@@ -31,7 +31,10 @@ class EditForm extends Component {
         await this.setState({
             task: {
                 addedTask: editedTask,
-                _id: this.state.task._id
+                _id: this.state.task._id,
+                completed: this.state.task.completed,
+                priority: this.state.task.priority,
+                date: this.state.task.date
             }
         })
     }
