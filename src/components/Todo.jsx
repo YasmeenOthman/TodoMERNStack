@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 import "../todo.css"
-import EditForm from "./EditForm"
+import EditForm from "./EditForm";
+import $, { data } from "jquery";
 var quotes = require('../oneWordMotivation.json')
 
 class Todos extends React.Component {
@@ -16,11 +17,25 @@ class Todos extends React.Component {
   }
   /* ---- fetching data from database ----*/
   receivingTodos() {
-    axios.get('http://localhost:3000/catch').then((res) => {
-      this.setState({
-        tasks: res.data
-      })
-    }).catch((err) => { throw err })
+    // axios.get('http://localhost:3000/catch').then((res) => {
+    //   this.setState({
+    //     tasks: res.data
+    //   })
+    // }).catch((err) => { throw err })
+    var that = this;
+    $.ajax({
+      url:'/catch',
+      type:'GET',
+      success: function(data){
+        // console.log("tasks retrieved successfully data:",data)
+        that.setState({
+          tasks:data
+        });
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
   componentDidMount() {
     this.receivingTodos()
