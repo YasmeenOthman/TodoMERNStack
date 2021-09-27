@@ -1,11 +1,11 @@
 const express = require('express')
-const db = require ('./DataBase/db');
+const db = require('./DataBase/db');
 const bodyParser = require('body-parser');
-const cors = require ('cors');
+const cors = require('cors');
 const path = require('path');
-const model = require ('./DataBase/todoModel');
+const model = require('./DataBase/todoModel');
 
-const port = process.env.Port|| 5000
+const port = process.env.Port || 5000
 const app = express()
 
 app.use(cors());
@@ -20,63 +20,66 @@ app.use(bodyParser.urlencoded({ extended: false }));
 /* ---------------------------------------
 SERVE STATIC FILES IN SERVER
 -------------------------------------------*/
-app.use(express.static (path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-    // res.json({ message: "Hello from Express!" });
-	res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
+  // res.json({ message: "Hello from Express!" });
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 
 /*---------manage http request CRUD-------------*/
 
 /*--------save the task(POST REQUEST)--------*/
-app.post('/create', async(req,res)=>{
+app.post('/create', async (req, res) => {
   // console.log(req.body)
-  const task= new model({addedTask : req.body.addedTask})
-  await task.save().then(item => {
-  res.send("item saved to database");
-  }).catch(err => {
-     res.status(400).send("unable to save to database");
-  });
+  try {
+    const task = new model({ addedTask: req.body.addedTask })
+    await task.save()
+    res.send("item saved to database");
+  } catch {
+    res.status(400).send("unable to save to database");
+  }
+
+
 
 })
 /*----------get task (GET REQUEST)-------------*/
 
-app.get('/catch', async(req,res) =>{
-  try{
-    const task= await model
-    .aggregate(
-      [
-        { $sort : { date : -1 ,_id:1} }
-      ]
-   ).limit(25)
+app.get('/catch', async (req, res) => {
+  try {
+    const task = await model
+      .aggregate(
+        [
+          { $sort: { date: -1, _id: 1 } }
+        ]
+      ).limit(25)
     res.send(task)
-    res.json({task})
   }
-  catch(err ) {
+  catch (err) {
     res.send(err);
-  }});
+  }
+});
 
 
 /*------ Edit and update the task(put request)----------*/
-app.put("/edit/:id",async(req,res)=> {
-  try{
-    const task = await model.findByIdAndUpdate(req.params.id,req.body.task)
+app.put("/edit/:id", async (req, res) => {
+  try {
+    const task = await model.findByIdAndUpdate(req.params.id, req.body.task)
     res.send(task)
-  } 
-  catch(error){
+  }
+  catch (error) {
     res.send(error)
-  } 
+  }
 })
 
 /*----------delete task (delete request)-------*/
-app.delete("/delete/:id",async(req,res) => {
-  try{
+app.delete("/delete/:id", async (req, res) => {
+  try {
     const task = await model.findByIdAndDelete(req.params.id);
     res.send(task)
   }
-  catch(err){
+  catch (err) {
     res.send(err)
   }
 })

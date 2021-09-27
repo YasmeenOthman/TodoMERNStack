@@ -2,40 +2,28 @@ import React from "react";
 import axios from "axios";
 import "../todo.css"
 import EditForm from "./EditForm";
-import $, { data } from "jquery";
-var quotes = require('../oneWordMotivation.json')
+// import $ from "jquery";
+// var quotes = require('../oneWordMotivation.json')
 
 class Todos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isEditing: false,
-      tasks: []
+      tasks: [],
+      addedTask:""
     }
     this.receivingTodos = this.receivingTodos.bind(this);
     this.handelCallback = this.handelCallback.bind(this)
   }
   /* ---- fetching data from database ----*/
   receivingTodos() {
-    // axios.get('http://localhost:3000/catch').then((res) => {
-    //   this.setState({
-    //     tasks: res.data
-    //   })
-    // }).catch((err) => { throw err })
-    var that = this;
-    $.ajax({
-      url:'/catch',
-      type:'GET',
-      success: function(data){
-        // console.log("tasks retrieved successfully data:",data)
-        that.setState({
-          tasks:data
-        });
-      },
-      error: function(err){
-        console.log(err);
-      }
-    })
+    axios.get('http://localhost:3000/catch').then((res) => {
+      this.setState({
+        tasks: res.data
+      })
+    }).catch((err) => { throw err })
+  
   }
   componentDidMount() {
     this.receivingTodos()
@@ -45,8 +33,9 @@ class Todos extends React.Component {
     var currentTask = this.state.tasks.find((task) => {
       return task._id === id;
     });
-    this.state.addedTask = currentTask
+    
     this.setState({
+      addedTask:currentTask,
       isEditing: true
     })
   }
